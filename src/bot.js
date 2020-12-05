@@ -1,13 +1,12 @@
 require('dotenv').config();
-import { Client, Message, VoiceChannel } from 'discord.js';
-
-const client: Client = new Client();
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user!.tag}!`);
+  console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', (msg: Message) => {
+client.on('message', (msg) => {
   if (msg.content[0] !== '\\') return;
   msg.content = msg.content.toLowerCase().substring(1);
 
@@ -28,7 +27,7 @@ client.on('message', (msg: Message) => {
     const channel = client.channels.cache.get('437140734311661582');
     if (!channel) return console.error('The channel does not exist!');
 
-    (channel as VoiceChannel)
+    channel
       .join()
       .then((connection) => {
         console.log('Successfully connected.');
@@ -51,7 +50,7 @@ client.on('message', (msg: Message) => {
 
         // disconnect after 10 seconds
         setTimeout(() => {
-          (channel as VoiceChannel).leave();
+          channel.leave();
 
           dispatcher.destroy();
         }, 15000);
