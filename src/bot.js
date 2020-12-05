@@ -1,6 +1,9 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const _ = require('lodash');
+
+const entranceMusic = require('./partials/entranceMusic.js');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -11,6 +14,12 @@ client.on('message', (msg) => {
   msg.content = msg.content.toLowerCase().substring(1);
 
   console.log(msg.content);
+
+  if (msg.content === 'rip') {
+    msg.react('😢');
+    msg.react('😭');
+    msg.react('😟');
+  }
 
   if (msg.content === 'ping') {
     msg.reply('Pong!');
@@ -33,10 +42,9 @@ client.on('message', (msg) => {
         console.log('Successfully connected.');
 
         // Create a dispatcher
-        console.log(require('path').join(__dirname, './Rocky Music Video-Eye Of The Tiger.mp3'));
-        const dispatcher = connection.play(
-          require('path').join(__dirname, './Rocky Music Video-Eye Of The Tiger.mp3')
-        );
+        const rando = _.sample(Object.values(entranceMusic));
+
+        const dispatcher = connection.play(require('path').join(__dirname, rando.path));
 
         dispatcher.on('start', () => {
           console.log('audio.mp3 is now playing!');
@@ -48,12 +56,12 @@ client.on('message', (msg) => {
 
         dispatcher.on('error', console.error);
 
-        // disconnect after 10 seconds
+        // disconnect after 18 seconds
         setTimeout(() => {
-          channel.leave();
-
           dispatcher.destroy();
-        }, 15000);
+
+          channel.leave();
+        }, 18000);
       })
       .catch((e) => console.error(e));
   }
