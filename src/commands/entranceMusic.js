@@ -1,3 +1,4 @@
+const ytdl = require('ytdl-core');
 const _ = require('lodash');
 
 module.exports = {
@@ -12,37 +13,30 @@ module.exports = {
       return msg.channel.send("I don't have permission to join and speak in your voice channel!");
     }
 
-    const entranceMusic = require('../partials/entranceMusic.js');
-
     playEntranceMusic(voiceChannel);
 
     function playEntranceMusic(voiceChannel) {
+      const entranceMusic = require('../partials/entranceMusic.js');
+
       voiceChannel
         .join()
         .then((connection) => {
           console.log('Successfully connected.');
 
-          // Create a dispatcher
           const rando = _.sample(Object.values(entranceMusic));
 
-          const dispatcher = connection.play(require('path').join(__dirname, '../', rando.path));
+          const stream = ytdl(rando.origin, { filter: 'audioonly' });
 
-          console.log(require('path').join(__dirname, '../', rando.path));
+          connection.play(stream, { seek: 0, volume: 1 });
 
-          dispatcher.on('start', () => {
-            console.log('audio.mp3 is now playing!');
-          });
-
-          dispatcher.on('finish', () => {
+          connection.on('finish', () => {
             console.log('music has finished playing!');
           });
 
-          dispatcher.on('error', console.error);
+          connection.on('error', console.error);
 
           // disconnect after 18 seconds
           setTimeout(() => {
-            dispatcher.destroy();
-
             voiceChannel.leave();
           }, 18000);
         })

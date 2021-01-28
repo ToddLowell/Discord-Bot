@@ -1,8 +1,7 @@
+const ytdl = require('ytdl-core');
 const _ = require('lodash');
 
 module.exports = (client) => {
-  const entranceMusic = require('./partials/entranceMusic.js');
-
   client.on('voiceStateUpdate', (oldState, newState) => {
     // return if Aigis
     if (oldState.id === '784403906363916288' || newState.id === '784403906363916288') return;
@@ -53,30 +52,27 @@ module.exports = (client) => {
   });
 
   function playEntranceMusic(channel) {
+    const entranceMusic = require('./partials/entranceMusic.js');
+
     channel
       .join()
       .then((connection) => {
         console.log('Successfully connected.');
 
-        // Create a dispatcher
         const rando = _.sample(Object.values(entranceMusic));
 
-        const dispatcher = connection.play(require('path').join(__dirname, rando.path));
+        const stream = ytdl(rando.origin, { filter: 'audioonly' });
 
-        dispatcher.on('start', () => {
-          console.log('audio.mp3 is now playing!');
-        });
+        connection.play(stream, { seek: 0, volume: 1 });
 
-        dispatcher.on('finish', () => {
+        connection.on('finish', () => {
           console.log('music has finished playing!');
         });
 
-        dispatcher.on('error', console.error);
+        connection.on('error', console.error);
 
         // disconnect after 18 seconds
         setTimeout(() => {
-          dispatcher.destroy();
-
           channel.leave();
         }, 18000);
       })
