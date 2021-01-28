@@ -16,7 +16,7 @@ let usersInVoice = null;
 const app = express();
 app.use(cors());
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
   console.log(`Listening to port ${process.env.PORT || 5000}.`);
 });
 
