@@ -1,0 +1,85 @@
+const _ = require('lodash');
+
+module.exports = (client) => {
+  const entranceMusic = require('./partials/entranceMusic.js');
+
+  client.on('voiceStateUpdate', (oldState, newState) => {
+    // return if Aigis
+    if (oldState.id === '784403906363916288' || newState.id === '784403906363916288') return;
+
+    // if joining a channel
+    if (newState.channelID) {
+      const newGuild = client.guilds.cache.get(newState.guild.id);
+      const newChannel = newGuild.channels.cache.get(newState.channelID);
+      const newUsers = newChannel.members;
+
+      usersInVoice = {};
+      newUsers.forEach((user) => {
+        // don't show Aigis
+        if (user.user.constructor.name === 'ClientUser') return;
+        usersInVoice[user.user.id] = {
+          name: user.user.username,
+          avatar: user.user.displayAvatarURL({ size: 1024, format: 'png' }),
+        };
+      });
+    } else if (oldState.channelID) {
+      const oldGuild = client.guilds.cache.get(oldState.guild.id);
+      const oldChannel = oldGuild.channels.cache.get(oldState.channelID);
+      const oldUsers = oldChannel.members;
+
+      usersInVoice = {};
+      oldUsers.forEach((user) => {
+        // don't show Aigis
+        if (user.user.constructor.name === 'ClientUser') return;
+        usersInVoice[user.user.id] = {
+          name: user.user.username,
+          avatar: user.user.displayAvatarURL({ size: 1024, format: 'png' }),
+        };
+      });
+    }
+
+    const newUserChannel = newState.channelID;
+    const oldUserChannel = oldState.channelID;
+    console.log(newUserChannel, oldUserChannel);
+
+    if (oldUserChannel === null && newUserChannel !== null) {
+      console.log('New user joined a channel.');
+      const channel = client.channels.cache.get(newUserChannel);
+      // user joins a new voice channel
+      if (newState.id === '329257874654101514') playEntranceMusic(channel);
+    } else if (newUserChannel === null) {
+      // User leaves a voice channel
+    }
+  });
+
+  function playEntranceMusic(channel) {
+    channel
+      .join()
+      .then((connection) => {
+        console.log('Successfully connected.');
+
+        // Create a dispatcher
+        const rando = _.sample(Object.values(entranceMusic));
+
+        const dispatcher = connection.play(require('path').join(__dirname, rando.path));
+
+        dispatcher.on('start', () => {
+          console.log('audio.mp3 is now playing!');
+        });
+
+        dispatcher.on('finish', () => {
+          console.log('music has finished playing!');
+        });
+
+        dispatcher.on('error', console.error);
+
+        // disconnect after 18 seconds
+        setTimeout(() => {
+          dispatcher.destroy();
+
+          channel.leave();
+        }, 18000);
+      })
+      .catch((e) => console.error(e));
+  }
+};
