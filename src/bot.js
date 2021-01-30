@@ -46,4 +46,4 @@ client.on('ready', () => {
   loadCommands(client);
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.NODE_ENV === 'development' ? process.env.TOKEN_DEVELOPMENT : process.env.TOKEN_PRODUCTION);

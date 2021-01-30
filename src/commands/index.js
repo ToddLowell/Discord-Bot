@@ -1,6 +1,9 @@
 require('dotenv').config();
 
-const prefix = process.env.COMMAND_PREFIX;
+const prefix =
+  process.env.NODE_ENV === 'development'
+    ? process.env.COMMAND_PREFIX_DEVELOPMENT
+    : process.env.COMMAND_PREFIX_PRODUCTION;
 
 module.exports = (client, commandOptions) => {
   let {
