@@ -1,5 +1,37 @@
+const express = require('express');
+const cors = require('cors');
 const ytdl = require('ytdl-core');
 const _ = require('lodash');
+
+let usersInVoice = null;
+
+const app = express();
+app.use(cors());
+
+app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+  console.log(`Listening to port ${process.env.PORT || 3000}.`);
+});
+
+// SSE
+app.get('/hook', async (req, res) => {
+  console.log('Triggered /hooks');
+  res.set({
+    'Cache-Control': 'no-cache',
+    'Content-Type': 'text/event-stream',
+    Connection: 'keep-alive',
+    'Access-Control-Allow-Origin': '*',
+  });
+  res.flushHeaders();
+
+  // Tell the client to retry every 10 seconds if connectivity is lost
+  res.write('retry: 10000\n\n');
+
+  while (true) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    res.write(`data: ${JSON.stringify(usersInVoice)}\n\n`);
+  }
+});
 
 module.exports = (client) => {
   client.on('voiceStateUpdate', (oldState, newState) => {
