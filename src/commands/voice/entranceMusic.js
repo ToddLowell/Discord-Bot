@@ -16,7 +16,7 @@ module.exports = {
     playEntranceMusic(voiceChannel);
 
     function playEntranceMusic(voiceChannel) {
-      const entranceMusic = require('../partials/entranceMusic.js');
+      const entranceMusic = require('../../partials/entranceMusic.js');
 
       voiceChannel
         .join()
