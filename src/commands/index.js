@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const prefix = '\\';
+const prefix = process.env.COMMAND_PREFIX;
 
 module.exports = (client, commandOptions) => {
   let {
