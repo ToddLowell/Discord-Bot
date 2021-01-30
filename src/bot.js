@@ -13,4 +13,4 @@ client.on('ready', () => {
   require('./commands/loadCommands.js')(client);
 });
 
-client.login(process.env.NODE_ENV === 'development' ? process.env.TOKEN_DEVELOPMENT : process.env.TOKEN_PRODUCTION);
+client.login(process.env.NODE_ENV === 'development' ? process.env.TOKEN_DEVELOPMENT : process.env.TOKEN);
