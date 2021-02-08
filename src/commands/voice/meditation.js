@@ -13,7 +13,14 @@ module.exports = {
     }
 
     // play track
-    const stream = ytdl('https://www.youtube.com/watch?v=-3i4SBmY204', { filter: 'audioonly' });
+    const stream = ytdl('https://www.youtube.com/watch?v=-3i4SBmY204', {
+      filter: 'audioonly',
+      requestOptions: {
+        headers: {
+          Cookie: 'YSC=LNxY9HGZsP8; VISITOR_INFO1_LIVE=HBfznt1wqvw; GPS=1; PREF=tz=Asia.Singapore&f4=4000000',
+        },
+      },
+    });
 
     voiceChannel
       .join()
