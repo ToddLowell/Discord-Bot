@@ -1,15 +1,17 @@
 require('dotenv').config();
+const Discord = require('discord.js');
 const loadCommands = require('../loadCommands.js');
 
-const Discord = require('discord.js');
-
 const prefix =
-  process.env.NODE_ENV === 'development' ? process.env.COMMAND_PREFIX_DEVELOPMENT : process.env.COMMAND_PREFIX;
+  process.env.NODE_ENV === 'development'
+    ? process.env.COMMAND_PREFIX_DEVELOPMENT
+    : process.env.COMMAND_PREFIX;
 
 module.exports = {
   commands: ['help', 'h', 'command', 'commands'],
   expectedArgs: '<command>',
-  description: "Describe all of Aigis's commands. Or see the details of a specific command.",
+  description:
+    "Describe all of Aigis's commands. Or see the details of a specific command.",
   maxArgs: 1,
   callback(msg, args, text) {
     let msgReply = '';
@@ -28,8 +30,16 @@ module.exports = {
             'https://aigis-discord-bot.herokuapp.com/'
           )
           .setColor('#66fcf1')
-          .setTitle(`${prefix}${args[0]} ${command.expectedArgs ? command.expectedArgs : ''}`)
-          .setDescription(command.description ? command.description : 'No description available.');
+          .setTitle(
+            `${prefix}${args[0]} ${
+              command.expectedArgs ? command.expectedArgs : ''
+            }`
+          )
+          .setDescription(
+            command.description
+              ? command.description
+              : 'No description available.'
+          );
 
         if (typeof command.commands === 'object') {
           embed.addFields({
@@ -67,7 +77,10 @@ module.exports = {
         }
 
         // format string reply
-        const mainCommand = typeof command.commands === 'string' ? command.commands : command.commands[0];
+        const mainCommand =
+          typeof command.commands === 'string'
+            ? command.commands
+            : command.commands[0];
         // don't include help command
         if (mainCommand === 'help') continue;
 
@@ -83,7 +96,9 @@ module.exports = {
         .setColor('#66fcf1')
         .setTitle('List of Supported Commands')
         // .setURL('https://aigis-discord-bot.herokuapp.com/')
-        .setDescription(`Type \`${prefix}help <command>\` to see more details on that specific command.`)
+        .setDescription(
+          `Type \`${prefix}help <command>\` to see more details on that specific command.`
+        )
         .addFields({
           name: '\u200B',
           value: msgReply,

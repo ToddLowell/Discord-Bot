@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 
@@ -7,11 +8,13 @@ const app = express();
 app.use(cors());
 
 app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+  // eslint-disable-next-line no-console
   console.log(`Listening to port ${process.env.PORT || 3000}.`);
 });
 
 // SSE
 app.get('/hook', async (req, res) => {
+  // eslint-disable-next-line no-console
   console.log('Triggered /hooks');
   res.set({
     'Cache-Control': 'no-cache',
@@ -34,7 +37,11 @@ app.get('/hook', async (req, res) => {
 module.exports = (client) => {
   client.on('voiceStateUpdate', (oldState, newState) => {
     // return if Aigis
-    if (oldState.id === '784403906363916288' || newState.id === '784403906363916288') return;
+    if (
+      oldState.id === '784403906363916288' ||
+      newState.id === '784403906363916288'
+    )
+      return;
 
     // if joining a channel
     if (newState.channelID) {
@@ -69,10 +76,10 @@ module.exports = (client) => {
 
     const newUserChannel = newState.channelID;
     const oldUserChannel = oldState.channelID;
-    console.log(newUserChannel, oldUserChannel);
+    // console.log(newUserChannel, oldUserChannel);
 
     if (oldUserChannel === null && newUserChannel !== null) {
-      console.log('New user joined a channel.');
+      // console.log('New user joined a channel.');
       const channel = client.channels.cache.get(newUserChannel);
       // user joins a new voice channel
       if (newState.id === '329257874654101514') playEntranceMusic(channel);
@@ -85,14 +92,18 @@ module.exports = (client) => {
     channel
       .join()
       .then((connection) => {
-        console.log('Successfully connected.');
+        console.log('Successfully connected.'); // eslint-disable-line
 
-        connection.play(path.join(__dirname, './assets/JoJo.mp3'), { seek: 0, volume: 1 });
-
-        connection.on('finish', () => {
-          console.log('music has finished playing!');
+        connection.play(path.join(__dirname, './assets/JoJo.mp3'), {
+          seek: 0,
+          volume: 1,
         });
 
+        connection.on('finish', () => {
+          console.log('music has finished playing!'); // eslint-disable-line
+        });
+
+        // eslint-disable-next-line no-console
         connection.on('error', console.error);
 
         // disconnect after 18 seconds
@@ -100,6 +111,6 @@ module.exports = (client) => {
           channel.leave();
         }, 18000);
       })
-      .catch((e) => console.error(e));
+      .catch((e) => console.error(e)); // eslint-disable-line
   }
 };

@@ -1,15 +1,16 @@
 require('dotenv').config();
 
 const prefix =
-  process.env.NODE_ENV === 'development' ? process.env.COMMAND_PREFIX_DEVELOPMENT : process.env.COMMAND_PREFIX;
+  process.env.NODE_ENV === 'development'
+    ? process.env.COMMAND_PREFIX_DEVELOPMENT
+    : process.env.COMMAND_PREFIX;
 
 module.exports = (client, commandOptions) => {
-  let {
-    commands,
+  let { commands, permissions = [] } = commandOptions;
+  const {
     expectedArgs = '',
     minArgs = 0,
     maxArgs = null,
-    permissions = [],
     permissionError = "You don't have permission to run this command.",
     requiredRoles = [],
     callback,
@@ -20,7 +21,7 @@ module.exports = (client, commandOptions) => {
     commands = [commands];
   }
 
-  console.log(`Registered Command: ${commands[0]}`);
+  console.log(`Registered Command: ${commands[0]}`); // eslint-disable-line 
 
   // change permissions to array if present
   if (permissions.length) {
@@ -36,7 +37,10 @@ module.exports = (client, commandOptions) => {
     const { member, content, guild } = msg;
 
     for (const alias of commands) {
-      if (content.toLowerCase().split(' ')[0] === `${prefix}${alias.toLowerCase()}`) {
+      if (
+        content.toLowerCase().split(' ')[0] ===
+        `${prefix}${alias.toLowerCase()}`
+      ) {
         // check user permissions
         for (const permission of permissions) {
           if (!member.hasPermission(permission)) {
@@ -47,11 +51,15 @@ module.exports = (client, commandOptions) => {
 
         // check user roles
         for (const requiredRole of requiredRoles) {
-          const role = guild.roles.cache.find((role) => role.name === requiredRole);
+          const role = guild.roles.cache.find(
+            (role) => role.name === requiredRole
+          );
 
           // if role does not exist or member does not have the role
           if (!role || !member.roles.cache.has(role.id)) {
-            msg.reply(`You don't have the '${requiredRole}' role required for this command.`);
+            msg.reply(
+              `You don't have the '${requiredRole}' role required for this command.`
+            );
             return;
           }
         }
@@ -61,7 +69,10 @@ module.exports = (client, commandOptions) => {
         args.shift();
 
         // check number of args
-        if (args.length < minArgs || (maxArgs !== null && args.length > maxArgs)) {
+        if (
+          args.length < minArgs ||
+          (maxArgs !== null && args.length > maxArgs)
+        ) {
           msg.reply(`Wrong Syntax! Use ${prefix}${alias} ${expectedArgs}`);
           return;
         }

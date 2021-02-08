@@ -1,27 +1,45 @@
 {
   "name": "discord_bot",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/bot.js",
-    "dev": "NODE_ENV=development nodemon src/bot.js"
+    "dev": "concurrently \"nuxt\" \"NODE_ENV=development nodemon src/bot.js\"",
+    "build": "nuxt build",
+    "start": "concurrently \"nuxt start\" \"NODE_ENV=production node src/bot.js\"",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js",
+    "pretty": " prettier --write \"src/**/*.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
+    "@nuxtjs/pwa": "^3.0.2",
+    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "ffmpeg-static": "^4.2.7",
     "lodash": "^4.17.20",
+    "nuxt": "^2.14.6",
     "yt-search": "^2.5.2",
     "ytdl-core": "^4.4.5"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
   }
 }

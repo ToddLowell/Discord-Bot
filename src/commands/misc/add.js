@@ -4,7 +4,7 @@ module.exports = {
   description: 'Add numbers',
   minArgs: 2,
   callback(msg, args, text) {
-    sum = args.reduce((a, b) => +a + +b, 0);
+    const sum = args.reduce((a, b) => +a + +b, 0);
 
     msg.reply(`The sum is ${sum}.`);
   },
