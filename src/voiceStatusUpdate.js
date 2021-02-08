@@ -1,38 +1,38 @@
 const path = require('path');
-const express = require('express');
-const cors = require('cors');
+// const express = require('express');
+// const cors = require('cors');
 
 let usersInVoice = null;
 
-const app = express();
-app.use(cors());
+// const app = express();
+// app.use(cors());
 
-app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-  // eslint-disable-next-line no-console
-  console.log(`Listening to port ${process.env.PORT || 3000}.`);
-});
+// app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+//   // eslint-disable-next-line no-console
+//   console.log(`Listening to port ${process.env.PORT || 3000}.`);
+// });
 
-// SSE
-app.get('/hook', async (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log('Triggered /hooks');
-  res.set({
-    'Cache-Control': 'no-cache',
-    'Content-Type': 'text/event-stream',
-    Connection: 'keep-alive',
-    'Access-Control-Allow-Origin': '*',
-  });
-  res.flushHeaders();
+// // SSE
+// app.get('/hook', async (req, res) => {
+//   // eslint-disable-next-line no-console
+//   console.log('Triggered /hooks');
+//   res.set({
+//     'Cache-Control': 'no-cache',
+//     'Content-Type': 'text/event-stream',
+//     Connection: 'keep-alive',
+//     'Access-Control-Allow-Origin': '*',
+//   });
+//   res.flushHeaders();
 
-  // Tell the client to retry every 10 seconds if connectivity is lost
-  res.write('retry: 10000\n\n');
+//   // Tell the client to retry every 10 seconds if connectivity is lost
+//   res.write('retry: 10000\n\n');
 
-  while (true) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+//   while (true) {
+//     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    res.write(`data: ${JSON.stringify(usersInVoice)}\n\n`);
-  }
-});
+//     res.write(`data: ${JSON.stringify(usersInVoice)}\n\n`);
+//   }
+// });
 
 module.exports = (client) => {
   client.on('voiceStateUpdate', (oldState, newState) => {
