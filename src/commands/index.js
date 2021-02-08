@@ -36,7 +36,7 @@ module.exports = (client, commandOptions) => {
     const { member, content, guild } = msg;
 
     for (const alias of commands) {
-      if (content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`)) {
+      if (content.toLowerCase().split(' ')[0] === `${prefix}${alias.toLowerCase()}`) {
         // check user permissions
         for (const permission of permissions) {
           if (!member.hasPermission(permission)) {

@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['le chi', 'lechi'],
+  commands: ['lechi'],
   callback(msg, args, text) {
     msg.channel.send('He a dum dum');
   },
