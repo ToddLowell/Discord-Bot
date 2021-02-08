@@ -2,7 +2,7 @@ const path = require('path');
 const Discord = require('discord.js');
 
 module.exports = {
-  commands: ['noU', 'reverseCard'],
+  commands: ['nou', 'reversecard'],
   description: `Unleash the power of "no u" and win any argument using the ultimate comeback card that nobody can resist.`,
   callback(msg, args, text) {
     const embed = new Discord.MessageEmbed()

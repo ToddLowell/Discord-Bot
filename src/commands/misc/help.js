@@ -29,11 +29,14 @@ module.exports = {
           )
           .setColor('#66fcf1')
           .setTitle(`${prefix}${args[0]} ${command.expectedArgs ? command.expectedArgs : ''}`)
-          .setDescription(command.description ? command.description : 'No description available.')
-          .addFields({
+          .setDescription(command.description ? command.description : 'No description available.');
+
+        if (typeof command.commands === 'object') {
+          embed.addFields({
             name: '\u200B',
             value: ['**Aliases**', ...command.commands],
           });
+        }
 
         return msg.channel.send(embed);
       }
