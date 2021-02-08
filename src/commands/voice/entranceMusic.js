@@ -1,5 +1,4 @@
-const ytdl = require('ytdl-core');
-const _ = require('lodash');
+const path = require('path');
 
 module.exports = {
   commands: ['entrancemusic', 'em'],
@@ -16,18 +15,12 @@ module.exports = {
     playEntranceMusic(voiceChannel);
 
     function playEntranceMusic(voiceChannel) {
-      const entranceMusic = require('../../partials/entranceMusic.js');
-
       voiceChannel
         .join()
         .then((connection) => {
           console.log('Successfully connected.');
 
-          const rando = _.sample(Object.values(entranceMusic));
-
-          const stream = ytdl(rando.origin, { filter: 'audioonly' });
-
-          connection.play(stream, { seek: 0, volume: 1 });
+          connection.play(path.join(__dirname, '../../assets/JoJo.mp3'), { seek: 0, volume: 1 });
 
           connection.on('finish', () => {
             console.log('music has finished playing!');

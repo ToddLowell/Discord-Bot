@@ -1,7 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const ytdl = require('ytdl-core');
-const _ = require('lodash');
 
 let usersInVoice = null;
 
@@ -84,18 +82,12 @@ module.exports = (client) => {
   });
 
   function playEntranceMusic(channel) {
-    const entranceMusic = require('./partials/entranceMusic.js');
-
     channel
       .join()
       .then((connection) => {
         console.log('Successfully connected.');
 
-        const rando = _.sample(Object.values(entranceMusic));
-
-        const stream = ytdl(rando.origin, { filter: 'audioonly' });
-
-        connection.play(stream, { seek: 0, volume: 1 });
+        connection.play(path.join(__dirname, './assets/JoJo.mp3'), { seek: 0, volume: 1 });
 
         connection.on('finish', () => {
           console.log('music has finished playing!');
