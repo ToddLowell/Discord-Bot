@@ -188,6 +188,7 @@ export default {
 
   .image {
     flex: 2;
+    max-height: 80%;
 
     img {
       margin-left: auto;
