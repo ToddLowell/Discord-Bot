@@ -43,10 +43,13 @@ module.exports = {
               : 'No description available.'
           );
 
-        if (typeof command.commands === 'object') {
+        if (
+          typeof command.commands === 'object' &&
+          command.commands.length !== 1
+        ) {
           embed.addFields({
-            name: '\u200B',
-            value: ['**Aliases**', ...command.commands],
+            name: 'Aliases',
+            value: [...command.commands],
           });
         }
 
@@ -98,7 +101,6 @@ module.exports = {
         )
         .setColor('#66fcf1')
         .setTitle('List of Supported Commands')
-        // .setURL('https://aigis-discord-bot.herokuapp.com/')
         .setDescription(
           `Type \`${prefix}help <command>\` to see more details on that specific command.`
         )
@@ -106,8 +108,6 @@ module.exports = {
           name: '\u200B',
           value: msgReply,
         });
-      // .setFooter('Made with a lot of coffee.')
-      // .setTimestamp();
 
       return msg.channel.send(embed);
     }

@@ -40,6 +40,6 @@ module.exports = {
         // eslint-disable-next-line no-console
         connection.on('error', console.error);
       })
-      .catch((e) => console.error(e)); // eslint-disable-line 
+      .catch((e) => console.error(e)); // eslint-disable-line
   },
 };

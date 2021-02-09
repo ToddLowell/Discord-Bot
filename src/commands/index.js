@@ -21,7 +21,7 @@ module.exports = (client, commandOptions) => {
     commands = [commands];
   }
 
-  console.log(`Registered Command: ${commands[0]}`); // eslint-disable-line 
+  console.log(`Registered Command: ${commands[0]}`); // eslint-disable-line
 
   // change permissions to array if present
   if (permissions.length) {

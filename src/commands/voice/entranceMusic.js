@@ -38,7 +38,7 @@ module.exports = {
             voiceChannel.leave();
           }, 18000);
         })
-        .catch((e) => console.error(e)); // eslint-disable-line 
+        .catch((e) => console.error(e)); // eslint-disable-line
     }
   },
   permissions: [],
