@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const Discord = require('discord.js');
 const loadCommands = require('../loadCommands.js');
 
@@ -24,9 +25,10 @@ module.exports = {
         if (!command.commands.includes(args[0].toLowerCase())) continue;
 
         const embed = new Discord.MessageEmbed()
+          .attachFiles(path.join(__dirname, '../../assets/avatar.jpg'))
           .setAuthor(
             'Aigis',
-            'https://raaedkabir-assets.s3.amazonaws.com/Aigis+Avatar.jpg',
+            'attachment://avatar.jpg',
             'https://aigis-discord-bot.herokuapp.com/'
           )
           .setColor('#66fcf1')
