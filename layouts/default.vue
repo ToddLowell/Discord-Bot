@@ -32,7 +32,7 @@ a {
     display: inline-block;
     padding: 0.5em 1.5em;
     font-size: 1.5em;
-    font-weight: 600;
+    font-weight: 700;
     background: var(--clr-primary);
     border-radius: 100vw;
 

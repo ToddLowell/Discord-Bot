@@ -69,7 +69,7 @@
     </section>
     <footer>
       <div class="container">
-        <div class="title">
+        <div class="bot-details">
           <p>Aigis</p>
           <p>
             <a
@@ -232,12 +232,12 @@ footer {
       border: none;
     }
 
-    .title {
-      & > p:first-child {
-        margin-bottom: 0.5em;
-        font-weight: 600;
-      }
+    * > p:first-of-type {
+      margin-bottom: 0.5em;
+      font-weight: 700;
+    }
 
+    .bot-details {
       svg {
         height: 25px;
 
@@ -252,16 +252,14 @@ footer {
     }
 
     .heading {
-      margin-bottom: 0.5em;
       color: var(--clr-grey-lighter);
-      font-weight: 600;
     }
   }
 
   .bottom {
     display: flex;
     justify-content: space-between;
-    padding: 6rem 2rem 2rem;
+    padding: 5rem 2rem 2rem;
     font-size: 1.4rem;
   }
 }
