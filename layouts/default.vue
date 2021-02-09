@@ -1,55 +1,45 @@
 <template>
   <div>
+    <TheNavbar />
     <Nuxt />
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+import TheNavbar from '@/components/Layout/TheNavbar.vue';
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
+export default {
+  components: {
+    TheNavbar,
+  },
+};
+</script>
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
+<style lang="scss">
+a {
+  color: inherit;
   text-decoration: none;
-  padding: 10px 30px;
-}
+  border-bottom: 1px solid currentColor;
+  transition: all 0.2s ease;
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
+  &:hover {
+    color: var(--clr-primary);
+  }
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
+  &.cta {
+    margin-top: 1em;
+    border: none;
+    display: inline-block;
+    padding: 0.5em 1.5em;
+    font-size: 1.5em;
+    font-weight: 600;
+    background: var(--clr-primary);
+    border-radius: 100vw;
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+    &:hover {
+      color: var(--clr-primary);
+      background: var(--clr-text);
+    }
+  }
 }
 </style>

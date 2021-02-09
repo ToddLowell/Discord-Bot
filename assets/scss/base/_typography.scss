@@ -1,0 +1,18 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  @include interpolate((font-size), 600px, 1800px, 40px, 60px);
+}
+
+h2 {
+  @include interpolate((font-size), 600px, 1800px, 30px, 45px);
+  @include interpolate((padding-top, padding-bottom), 600px, 1800px, 5px, 40px);
+}

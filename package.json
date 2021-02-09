@@ -6,12 +6,13 @@
   "main": "bot.js",
   "scripts": {
     "dev": "concurrently \"nuxt\" \"NODE_ENV=development nodemon src/bot.js\"",
+    "dev-website": "nuxt",
     "build": "nuxt build",
     "start": "concurrently \"nuxt start\" \"NODE_ENV=production node src/bot.js\"",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
-    "pretty": " prettier --write \"src/**/*.js\""
+    "prettify": " prettier --write \"src/**/*.js\""
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
     "ffmpeg-static": "^4.2.7",
     "lodash": "^4.17.20",
     "nuxt": "^2.14.6",
+    "vue-lottie": "^0.2.1",
     "yt-search": "^2.5.2",
     "ytdl-core": "^4.4.5"
   },
@@ -39,7 +41,10 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "fibers": "^5.0.0",
     "nodemon": "^2.0.6",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "sass": "^1.32.6",
+    "sass-loader": "^10.1.1"
   }
 }

@@ -1,0 +1,53 @@
+:root {
+  --clr-primary: #67d6f1;
+
+  --clr-text: #fff;
+  --clr-bg: #000;
+
+  --clr-grey: #36393f;
+  --clr-grey-dark: #2a2c30;
+  --clr-grey-darker: #202024;
+  --clr-grey-light: #727375;
+  --clr-grey-lighter: #afafaf;
+
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// setting 1rem to 10px
+html {
+  font-size: 62.5%;
+  color: var(--clr-text);
+  background: var(--clr-grey-dark);
+
+  @include respond(tab-land) {
+    font-size: 56.25%; // 1rem = 9px
+  }
+
+  @include respond(tab-port) {
+    font-size: 50%; // 1rem = 8px
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; // 1rem = 12px
+  }
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

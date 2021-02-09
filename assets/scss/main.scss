@@ -1,0 +1,11 @@
+// https://sass-guidelin.es/#the-7-1-pattern
+
+@import 'abstracts/mixins';
+
+@import 'vendors/normalize';
+
+@import 'base/animations';
+@import 'base/reset';
+@import 'base/typography';
+
+@import 'layout/general';
