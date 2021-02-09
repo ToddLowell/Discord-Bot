@@ -3,8 +3,6 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-client.setMaxListeners(0);
-
 require('./voiceStatusUpdate.js')(client);
 
 client.on('ready', () => {

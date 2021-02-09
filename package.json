@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "concurrently \"nuxt\" \"NODE_ENV=development nodemon src/bot.js\"",
     "dev-website": "nuxt",
+    "dev-bot": "NODE_ENV=development nodemon src/bot.js",
     "build": "nuxt build",
     "start": "concurrently \"nuxt start\" \"NODE_ENV=production node src/bot.js\"",
     "generate": "nuxt generate",

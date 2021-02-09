@@ -15,13 +15,13 @@ module.exports = (client) => {
       } else if (file !== 'index.js' && file !== 'loadCommands.js') {
         const options = require(path.join(__dirname, dir, file));
         commandsArr.push(options);
-
-        if (client) commandHandler(client, options);
       }
     }
   };
 
   readCommands('.');
+
+  if (client) commandHandler(client, commandsArr);
 
   return commandsArr;
 };
