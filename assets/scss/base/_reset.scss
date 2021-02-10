@@ -1,15 +1,53 @@
 :root {
-  --clr-primary: #67d6f1;
+  --bg: #4FA4FF;
+  --bg-2: #0E8BEC;
 
-  --clr-text: #fff;
-  --clr-bg: #000;
+  --text: #fff;
+  --text-dark: #fff;
+  --text-accent: #214264;
+  --text-hover: #0F1F28;
+  --text-btn: #0b0c0c;
 
-  --clr-grey: #36393f;
-  --clr-grey-dark: #2a2c30;
-  --clr-grey-darker: #202024;
-  --clr-grey-light: #727375;
-  --clr-grey-lighter: #afafaf;
+  --nav :#0E8BEC;
 
+  // --clr-grey: #36393f;
+  // --clr-grey-dark: #2a2c30;
+  // --clr-grey-darker: #202024;
+  // --clr-grey-light: #727375;
+  // --clr-grey-lighter: #afafaf;
+
+  // --green: #6ee882;
+  // --red-dark: #5a191f;
+
+  // --primary-lighter: #84C5F6;
+  // --primary-light: #3f82da;
+  // --primary: #4FA4FF;
+  // --primary-dark :#0E8BEC;
+  // --primary-darker: #0b0c0c;
+
+  // --black: #0A141A;
+  // --grey: #6B839A;
+  // --grey-dark: #0F1F28;
+
+  // --secondary-light: #EBBF6B;
+  --secondary: #FFA75B;
+}
+
+[data-theme='dark'] {
+  --bg: #2a2c30;
+  --bg-2: #202024;
+
+  --text-dark: #2a2c30;
+  --text-hover: #727375;
+  --text-accent: #afafaf;
+
+  --nav: #67d6f1;
+
+  --secondary: #67d6f1;
+}
+
+html {
+  transition: all 1.5s ease;
 }
 
 *,
@@ -23,8 +61,8 @@
 // setting 1rem to 10px
 html {
   font-size: 62.5%;
-  color: var(--clr-text);
-  background: var(--clr-grey-dark);
+  color: var(--text);
+  background: var(--bg);
 
   @include respond(tab-land) {
     font-size: 56.25%; // 1rem = 9px

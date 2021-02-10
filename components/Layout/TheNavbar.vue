@@ -5,6 +5,11 @@
       <span>Aigis Discord Bot</span>
       <ul>
         <li>
+          <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+            <input id="checkbox_theme" type="checkbox" />
+          </label>
+        </li>
+        <li>
           <a
             href="https://discord.com/api/oauth2/authorize?client_id=784403906363916288&permissions=8&scope=bot"
             target="_blank"
@@ -32,25 +37,46 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    // identify the toggle switch HTML element
+    const toggleSwitch = document.querySelector(
+      '#theme-switch input[type="checkbox"]'
+    );
+
+    // function that changes the theme, and sets a localStorage variable to track the theme between page loads
+    function switchTheme(e) {
+      if (e.target.checked) {
+        localStorage.setItem('theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleSwitch.checked = true;
+      } else {
+        localStorage.setItem('theme', 'light');
+        document.documentElement.setAttribute('data-theme', 'light');
+        toggleSwitch.checked = false;
+      }
+    }
+
+    // listener for changing themes
+    toggleSwitch.addEventListener('change', switchTheme, false);
+
+    // pre-check the dark-theme checkbox if dark-theme is set
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+      toggleSwitch.checked = true;
+    }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 nav {
-  background: var(--clr-primary);
-  color: var(--clr-grey-dark);
+  background: var(--nav);
+  color: var(--text-dark);
+  fill: var(--text-dark);
 
   a {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.2s ease;
     border: none;
-
-    &:hover,
-    &:hover path {
-      color: var(--clr-grey-light);
-      fill: var(--clr-grey-light);
-    }
+    display: flex;
   }
 
   > div,
@@ -79,10 +105,6 @@ nav {
   svg {
     height: 25px;
     transition: all 0.2s ease;
-
-    path {
-      fill: var(--clr-grey-dark);
-    }
   }
 }
 </style>

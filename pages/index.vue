@@ -198,7 +198,7 @@ export default {
 
 .features {
   padding: 20rem 0;
-  background: var(--clr-grey-darker);
+  background: var(--bg-2);
   clip-path: polygon(0 15%, 100% 0%, 100% 85%, 0% 100%);
 
   .feature-list {
@@ -235,6 +235,7 @@ footer {
     * > p:first-of-type {
       margin-bottom: 0.5em;
       font-weight: 700;
+      color: var(--text-accent);
     }
 
     .bot-details {
@@ -242,17 +243,16 @@ footer {
         height: 25px;
 
         path {
-          fill: var(--clr-text);
+          fill: var(--text);
         }
 
         &:hover path {
-          fill: var(--clr-primary);
+          fill: var(--text-hover);
         }
       }
     }
 
     .heading {
-      color: var(--clr-grey-lighter);
     }
   }
 
