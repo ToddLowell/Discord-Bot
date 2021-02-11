@@ -13,7 +13,10 @@
           >
         </div>
         <div class="image">
-          <img src="@/assets/images/PQ2 Aigis.png" alt="Aigis from PQ2" />
+          <div>
+            <img src="@/assets/images/PQ2 Aigis.png" alt="Aigis from PQ2" />
+            <p>Offical Art from PQ2</p>
+          </div>
         </div>
       </div>
     </section>
@@ -182,16 +185,44 @@ export default {
   justify-content: space-between;
   align-items: center;
 
+  @include respond(phone) {
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .text {
     flex: 1;
+
+    @include respond(phone) {
+      margin-top: 5rem;
+      flex: initial;
+      order: 2;
+    }
   }
 
   .image {
     flex: 2;
     max-height: 80%;
+    display: flex;
+    justify-content: flex-end;
+
+    @include respond(phone) {
+      justify-content: center;
+      max-height: 50%;
+    }
 
     img {
-      margin-left: auto;
+      height: 100%;
+
+      @include respond(phone) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.4rem;
     }
   }
 }
@@ -201,11 +232,22 @@ export default {
   background: var(--bg-2);
   clip-path: polygon(0 15%, 100% 0%, 100% 85%, 0% 100%);
 
+  @include respond(phone) {
+    padding: 30rem 0;
+  }
+
   .feature-list {
     margin-top: 5rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
+    @include respond(phone) {
+      flex-direction: column;
+      align-items: center;
+      margin: 5rem auto 0;
+      width: 80%;
+    }
 
     div {
       flex: 1;
@@ -227,6 +269,18 @@ footer {
   .container {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    @include respond(phone) {
+      // flex-direction: column;
+      div {
+        flex-basis: 33%;
+      }
+
+      .cta {
+        margin-left: auto;
+      }
+    }
 
     a {
       border: none;
@@ -250,9 +304,6 @@ footer {
           fill: var(--text-hover);
         }
       }
-    }
-
-    .heading {
     }
   }
 
