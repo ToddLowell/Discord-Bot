@@ -82,7 +82,11 @@ module.exports = (client) => {
       // console.log('New user joined a channel.');
       const channel = client.channels.cache.get(newUserChannel);
       // user joins a new voice channel
-      if (newState.id === '329257874654101514') playEntranceMusic(channel);
+      if (
+        newState.id === '329257874654101514' || // Le Chi
+        newState.id === '353568465480581130' // Baidi
+      )
+        playEntranceMusic(channel);
     } else if (newUserChannel === null) {
       // User leaves a voice channel
     }
