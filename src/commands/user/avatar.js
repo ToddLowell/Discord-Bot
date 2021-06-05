@@ -7,8 +7,6 @@ module.exports = {
   minArgs: 0,
   maxArgs: 1,
   callback(msg, args, text) {
-    console.log({ msg, args });
-
     if (msg.mentions.everyone)
       return msg.channel.send(`You can't use @everyone or @here.`);
 
