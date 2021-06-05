@@ -1,20 +1,23 @@
-require('dotenv').config();
-const path = require('path');
-const Discord = require('discord.js');
-const loadCommands = require('../loadCommands.js');
+import path from 'path';
+import * as dotenv from 'dotenv';
+import Discord, { PermissionResolvable } from 'discord.js';
+import loadCommands from '../loadCommands.js';
+import type { CommandOptions } from '../index';
+
+dotenv.config();
 
 const prefix =
   process.env.NODE_ENV === 'development'
     ? process.env.COMMAND_PREFIX_DEVELOPMENT
     : process.env.COMMAND_PREFIX;
 
-module.exports = {
+export default {
   commands: ['help', 'h', 'command', 'commands'],
   expectedArgs: '<command>',
   description:
     "Describe all of Aigis's commands. Or see the details of a specific command.",
   maxArgs: 1,
-  callback(msg, args, text) {
+  callback(msg, args) {
     let msgReply = '';
 
     const commands = loadCommands();
@@ -25,7 +28,7 @@ module.exports = {
         if (!command.commands.includes(args[0].toLowerCase())) continue;
 
         const embed = new Discord.MessageEmbed()
-          .attachFiles(path.join(__dirname, '../../assets/avatar.jpg'))
+          .attachFiles([path.join(__dirname, '../../assets/avatar.jpg')])
           .setAuthor(
             'Aigis',
             'attachment://avatar.jpg',
@@ -71,7 +74,9 @@ module.exports = {
           }
 
           for (const permission of permissions) {
-            if (!msg.member.hasPermission(permission)) {
+            if (
+              !msg.member!.hasPermission(permission as PermissionResolvable)
+            ) {
               hasPermission = false;
               break;
             }
@@ -93,7 +98,7 @@ module.exports = {
       }
 
       const embed = new Discord.MessageEmbed()
-        .attachFiles(path.join(__dirname, '../../assets/avatar.jpg'))
+        .attachFiles([path.join(__dirname, '../../assets/avatar.jpg')])
         .setAuthor(
           'Aigis',
           'attachment://avatar.jpg',
@@ -112,6 +117,4 @@ module.exports = {
       return msg.channel.send(embed);
     }
   },
-  permissions: [],
-  requiredRoles: [],
-};
+} as CommandOptions;

@@ -1,15 +1,17 @@
-const path = require('path');
+import path from 'path';
+import type { VoiceChannel, User } from 'discord.js';
+import type { CommandOptions } from '../index';
 
-module.exports = {
+export default {
   commands: ['entrancemusic', 'em'],
-  callback(msg, args, text) {
-    const voiceChannel = msg.member.voice.channel;
+  callback(msg) {
+    const voiceChannel = msg.member!.voice.channel;
     if (!voiceChannel)
       return msg.channel.send('You need to be in a voice channel to be cool!');
 
     // check if bot can join
-    const permissions = voiceChannel.permissionsFor(msg.client.user);
-    if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+    const permissions = voiceChannel.permissionsFor(msg.client.user as User);
+    if (!permissions!.has('CONNECT') || !permissions!.has('SPEAK')) {
       return msg.channel.send(
         "I don't have permission to join and speak in your voice channel!"
       );
@@ -17,7 +19,7 @@ module.exports = {
 
     playEntranceMusic(voiceChannel);
 
-    function playEntranceMusic(voiceChannel) {
+    function playEntranceMusic(voiceChannel: VoiceChannel) {
       voiceChannel
         .join()
         .then((connection) => {
@@ -41,6 +43,4 @@ module.exports = {
         .catch((e) => console.error(e)); // eslint-disable-line
     }
   },
-  permissions: [],
-  requiredRoles: [],
-};
+} as CommandOptions;

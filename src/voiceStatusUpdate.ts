@@ -1,8 +1,8 @@
-const path = require('path');
+import path from 'path';
+import type { Client, VoiceChannel } from 'discord.js';
+
 // const express = require('express');
 // const cors = require('cors');
-
-let usersInVoice = null;
 
 // const app = express();
 // app.use(cors());
@@ -34,7 +34,9 @@ let usersInVoice = null;
 //   }
 // });
 
-module.exports = (client) => {
+// let usersInVoice = null;
+
+export default (client: Client): void => {
   client.on('voiceStateUpdate', (oldState, newState) => {
     // return if Aigis
     if (
@@ -43,36 +45,37 @@ module.exports = (client) => {
     )
       return;
 
-    // if joining a channel
-    if (newState.channelID) {
-      const newGuild = client.guilds.cache.get(newState.guild.id);
-      const newChannel = newGuild.channels.cache.get(newState.channelID);
-      const newUsers = newChannel.members;
+    // ! - Desktop Overlay
+    // // if joining a channel
+    // if (newState.channelID) {
+    //   const newGuild = client.guilds.cache.get(newState.guild.id);
+    //   const newChannel = newGuild!.channels.cache.get(newState.channelID);
+    //   const newUsers = newChannel!.members;
 
-      usersInVoice = {};
-      newUsers.forEach((user) => {
-        // don't show Aigis
-        if (user.user.constructor.name === 'ClientUser') return;
-        usersInVoice[user.user.id] = {
-          name: user.user.username,
-          avatar: user.user.displayAvatarURL({ size: 1024, format: 'png' }),
-        };
-      });
-    } else if (oldState.channelID) {
-      const oldGuild = client.guilds.cache.get(oldState.guild.id);
-      const oldChannel = oldGuild.channels.cache.get(oldState.channelID);
-      const oldUsers = oldChannel.members;
+    //   usersInVoice = {};
+    //   newUsers.forEach((user) => {
+    //     // don't show Aigis
+    //     if (user.user.constructor.name === 'ClientUser') return;
+    //     usersInVoice[user.user.id] = {
+    //       name: user.user.username,
+    //       avatar: user.user.displayAvatarURL({ size: 1024, format: 'png' }),
+    //     };
+    //   });
+    // } else if (oldState.channelID) {
+    //   const oldGuild = client.guilds.cache.get(oldState.guild.id);
+    //   const oldChannel = oldGuild!.channels.cache.get(oldState.channelID);
+    //   const oldUsers = oldChannel!.members;
 
-      usersInVoice = {};
-      oldUsers.forEach((user) => {
-        // don't show Aigis
-        if (user.user.constructor.name === 'ClientUser') return;
-        usersInVoice[user.user.id] = {
-          name: user.user.username,
-          avatar: user.user.displayAvatarURL({ size: 1024, format: 'png' }),
-        };
-      });
-    }
+    //   usersInVoice = {};
+    //   oldUsers.forEach((user) => {
+    //     // don't show Aigis
+    //     if (user.user.constructor.name === 'ClientUser') return;
+    //     usersInVoice[user.user.id] = {
+    //       name: user.user.username,
+    //       avatar: user.user.displayAvatarURL({ size: 1024, format: 'png' }),
+    //     };
+    //   });
+    // }
 
     const newUserChannel = newState.channelID;
     const oldUserChannel = oldState.channelID;
@@ -80,7 +83,7 @@ module.exports = (client) => {
 
     if (oldUserChannel === null && newUserChannel !== null) {
       // console.log('New user joined a channel.');
-      const channel = client.channels.cache.get(newUserChannel);
+      const channel = client.channels.cache.get(newUserChannel) as VoiceChannel;
       // user joins a new voice channel
       if (
         newState.id === '329257874654101514' || // Le Chi
@@ -92,7 +95,7 @@ module.exports = (client) => {
     }
   });
 
-  function playEntranceMusic(channel) {
+  function playEntranceMusic(channel: VoiceChannel) {
     channel
       .join()
       .then((connection) => {

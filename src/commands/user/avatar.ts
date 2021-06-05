@@ -1,12 +1,13 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
+import type { CommandOptions } from '../index';
 
-module.exports = {
+export default {
   commands: 'avatar',
   expectedArgs: '@someone',
   description: "Get a User's Avatar",
   minArgs: 0,
   maxArgs: 1,
-  callback(msg, args, text) {
+  callback(msg) {
     if (msg.mentions.everyone)
       return msg.channel.send(`You can't use @everyone or @here.`);
 
@@ -28,4 +29,4 @@ module.exports = {
 
     msg.channel.send(embed);
   },
-};
+} as CommandOptions;

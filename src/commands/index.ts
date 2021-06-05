@@ -1,11 +1,26 @@
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+import type { Client, Message, PermissionResolvable } from 'discord.js';
+
+dotenv.config();
+
+export interface CommandOptions {
+  commands: string | string[];
+  expectedArgs?: string;
+  description?: string;
+  minArgs?: number;
+  maxArgs?: number | null;
+  callback: (msg: Message, args: string[], text: string) => void;
+  permissions?: string | string[];
+  permissionError?: "You don't have permission to run this command.";
+  requiredRoles?: string[];
+}
 
 const prefix =
   process.env.NODE_ENV === 'development'
     ? process.env.COMMAND_PREFIX_DEVELOPMENT
     : process.env.COMMAND_PREFIX;
 
-module.exports = (client, commandsArr) => {
+export default (client: Client, commandsArr: CommandOptions[]): void => {
   const commandOptions = commandsArr.map((commandOption) => {
     let { commands, permissions = [] } = commandOption;
     const {
@@ -49,6 +64,7 @@ module.exports = (client, commandsArr) => {
   client.on('message', (msg) => {
     let command = null;
     const { member, author, content, guild } = msg;
+
     if (
       // author of message is a bot
       author.bot ||
@@ -76,7 +92,7 @@ module.exports = (client, commandsArr) => {
         if (command.toLowerCase().split(' ')[0] === `${alias.toLowerCase()}`) {
           // check user permissions
           for (const permission of permissions) {
-            if (!member.hasPermission(permission)) {
+            if (!member!.hasPermission(permission as PermissionResolvable)) {
               msg.reply(permissionError);
               return;
             }
@@ -89,7 +105,7 @@ module.exports = (client, commandsArr) => {
             );
 
             // if role does not exist or member does not have the role
-            if (!role || !member.roles.cache.has(role.id)) {
+            if (!role || !member!.roles.cache.has(role.id)) {
               msg.reply(
                 `You don't have the '${requiredRole}' role required for this command.`
               );
@@ -121,7 +137,7 @@ module.exports = (client, commandsArr) => {
 };
 
 // validate permissions
-function validatePermissions(permissions) {
+function validatePermissions(permissions: string[]) {
   const validPermissions = [
     'CREATE_INSTANT_INVITE',
     'KICK_MEMBERS',

@@ -1,4 +1,7 @@
-module.exports = {
+import type { TextChannel, Collection, GuildMember } from 'discord.js';
+import type { CommandOptions } from '../index';
+
+export default {
   commands: ['imposter', 'impostor'],
   expectedArgs: '<@role>',
   description: `
@@ -17,9 +20,9 @@ module.exports = {
 
       // get role by ID
       if (args[0].startsWith('<@&'))
-        role = guild.roles.cache.find((c) => c.id === args[0].slice(3, -1));
+        role = guild!.roles.cache.find((c) => c.id === args[0].slice(3, -1));
       // get role by name
-      else role = guild.roles.cache.find((c) => c.name === text);
+      else role = guild!.roles.cache.find((c) => c.name === text);
 
       // validate
       if (!role) return channel.send(`${args[0]} is not a valid role.`);
@@ -30,28 +33,31 @@ module.exports = {
         `${role.members.random()} is the ${content.split(' ')[0].slice(1)}!`
       );
     }
+
     // role argument NOT provided
     else {
-      const roleMembersArr = [];
+      const roleMembersArr: Collection<string, GuildMember>[] = [];
       let memberList = null;
 
       // check which roles can access the channel
-      channel.permissionOverwrites.forEach((rolePermissions) => {
-        if (rolePermissions.allow.toArray().includes('VIEW_CHANNEL')) {
-          const role = guild.roles.cache.find(
-            (c) => c.id === rolePermissions.id
-          );
+      (channel as TextChannel).permissionOverwrites.forEach(
+        (rolePermissions) => {
+          if (rolePermissions.allow.toArray().includes('VIEW_CHANNEL')) {
+            const role = guild!.roles.cache.find(
+              (c) => c.id === rolePermissions.id
+            );
 
-          roleMembersArr.push(role.members);
+            roleMembersArr.push(role!.members);
+          }
         }
-      });
+      );
 
       // concat roleMembers
       if (roleMembersArr.length > 1)
         memberList = roleMembersArr[0].concat(...roleMembersArr);
 
       // if channel is public then get all members
-      if (!memberList) memberList = guild.members.cache;
+      if (!memberList) memberList = guild!.members.cache;
 
       // filter out bots
       memberList = memberList.filter((member) => !member.user.bot);
@@ -62,4 +68,4 @@ module.exports = {
       );
     }
   },
-};
+} as CommandOptions;

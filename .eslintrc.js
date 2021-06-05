@@ -4,18 +4,19 @@ module.exports = {
     browser: true,
     node: true,
   },
+  parser: 'vue-eslint-parser',
   parserOptions: {
     parser: 'babel-eslint',
   },
   extends: [
+    'plugin:@typescript-eslint/recommended',
     '@nuxtjs',
     'prettier',
     'prettier/vue',
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
   ],
-  plugins: ['prettier'],
-  // add your custom rules here
+  plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -24,4 +25,16 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['*.ts'],
+      parser: 'vue-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+      },
+      rules: {
+        '@typescript-eslint/no-non-null-assertion': 0,
+      },
+    },
+  ],
 };

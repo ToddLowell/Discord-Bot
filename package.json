@@ -5,11 +5,13 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "dev": "concurrently \"nuxt\" \"NODE_ENV=development nodemon src/bot.js\"",
+    "dev": "concurrently \"npm:dev-website\" \"npm:dev-bot\"",
     "dev-website": "nuxt",
-    "dev-bot": "NODE_ENV=development nodemon src/bot.js",
-    "build": "nuxt build",
-    "start": "concurrently \"nuxt start\" \"NODE_ENV=production node src/bot.js\"",
+    "dev-bot": "concurrently -k \"tsc -w\" \"NODE_ENV=development nodemon dist/bot.js\"",
+    "prebuild": "rimraf dist/",
+    "build": "nuxt build && tsc",
+    "postbuild": "copyfiles -f src/assets/* dist/assets",
+    "start": "concurrently \"nuxt start\" \"NODE_ENV=production node dist/bot.js\"",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
@@ -37,8 +39,13 @@
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^10.17.60",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
     "babel-eslint": "^10.1.0",
     "concurrently": "^5.3.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-nuxt": "^1.0.0",
@@ -46,7 +53,9 @@
     "fibers": "^5.0.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "sass": "^1.32.6",
-    "sass-loader": "^10.1.1"
+    "sass-loader": "^10.1.1",
+    "typescript": "^4.3.2"
   }
 }

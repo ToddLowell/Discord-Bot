@@ -1,17 +1,19 @@
-const ytdl = require('ytdl-core');
+import ytdl from 'ytdl-core';
+import type { User } from 'discord.js';
+import type { CommandOptions } from '../index';
 
-module.exports = {
+export default {
   commands: ['meditate', 'meditation'],
-  callback(msg, args, text) {
-    const voiceChannel = msg.member.voice.channel;
+  callback(msg) {
+    const voiceChannel = msg.member!.voice.channel;
     if (!voiceChannel)
       return msg.channel.send(
         'You need to be in a voice channel to use that command.'
       );
 
     // check if bot can join
-    const permissions = voiceChannel.permissionsFor(msg.client.user);
-    if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+    const permissions = voiceChannel.permissionsFor(msg.client.user as User);
+    if (!permissions!.has('CONNECT') || !permissions!.has('SPEAK')) {
       return msg.channel.send(
         "I don't have permission to join and/or speak in your voice channel (._.)."
       );
@@ -42,4 +44,4 @@ module.exports = {
       })
       .catch((e) => console.error(e)); // eslint-disable-line
   },
-};
+} as CommandOptions;

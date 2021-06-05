@@ -1,10 +1,11 @@
-const path = require('path');
-const Discord = require('discord.js');
+import path from 'path';
+import Discord from 'discord.js';
+import type { CommandOptions } from '../index';
 
-module.exports = {
+export default {
   commands: ['about'],
   description: `Learn about Aigis and her Creator.`,
-  callback(msg, args, text) {
+  callback(msg) {
     const embed = new Discord.MessageEmbed()
       .attachFiles([
         path.join(__dirname, '../../assets/avatar.jpg'),
@@ -33,4 +34,4 @@ module.exports = {
 
     msg.channel.send(embed);
   },
-};
+} as CommandOptions;
